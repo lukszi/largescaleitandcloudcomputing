@@ -21,9 +21,9 @@ CREATE TABLE IF NOT EXISTS "chat_service"."chat" (
     PRIMARY KEY ("id"));
 
 -- -----------------------------------------------------
--- Table "chat_service"."chatParticipant"
+-- Table "chat_service"."chat_participant"
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS "chat_service"."chatParticipant" (
+CREATE TABLE IF NOT EXISTS "chat_service"."chat_participant" (
                                                                 "user_id" INT NOT NULL,
                                                                 "chat_id" INT NOT NULL,
                                                                 PRIMARY KEY ("user_id", "chat_id"),
@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS "chat_service"."chatParticipant" (
 
 
 -- -----------------------------------------------------
--- Table "chat_service"."chatMessage"
+-- Table "chat_service"."chat_message"
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS "chat_service"."chatMessage" (
+CREATE TABLE IF NOT EXISTS "chat_service"."chat_message" (
                                                             "id" SERIAL NOT NULL,
                                                             "message" TEXT NOT NULL,
                                                             "chat_id" INT NOT NULL,
