@@ -7,7 +7,7 @@ services:
     depends_on:
       - PostgreSQL
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/chat_service
       - SPRING_DATASOURCE_USERNAME=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
   PostgreSQL:
