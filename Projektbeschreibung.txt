@@ -1,0 +1,34 @@
+Ziel des Projekts ist die Implementierung eines funktionalen Chatsystems. 
+Zur Umsetzung der Skalierbarkeit setzen wir auf eine microservices Architektur. 
+Die interne Kommunikation der einzelnen Komponenten des Systems, sowie die
+Kommunikation nach außen, werden mittels REST-API realisiert.
+
+Die fundamentalen Microservices die primär zu entwickeln sind umfassen:
+
+• - Usermanagement
+  Stellt Nutzerdaten zur Verfügung, wie z.B. welche Chats ein Nutzer offen hat
+
+• - Registration
+  Sorgt für die Eintragung neuer Nutzer in die Datenbank
+
+• - Authorization
+  Prüft ob ein Nutzer Daten zu einem Chat abrufen darf
+
+• - Authentication
+  Stellt Loginfunktionalität zur Verfügung
+
+• - Chatservice
+  Ruft Nachrichten zwischen zwei Nutzern ab bzw sendet Nachrichten an Nutzer ab
+
+Als Datenbank soll eine Postgres Datenbank verwendet werden.
+Die microservices Architektur ermöglicht bei der Implementierung zusätzlich die
+freie Wahl der Programmiersprache und bringt ausschließlich die
+Voraussetzungen mit sich, die sich aus der Wahl des Cloudproviders (Alibaba
+Cloud) sowie der Nutzung einer REST-API ergeben.
+
+Nach Fertigstellung der oben genannten Kernfunktionen, sollen nach Möglichkeit
+weitere QoL-Funktionen, sowie erweiterte Funktionalitäten entwickelt werden.
+Diese können unter Anderem die Containerisierung des Systems und
+microservices, als auch die Entwicklung eines CLI umfassen. Hierbei ist davon
+auszugehen, dass sich während des Entwicklungsprozesses potenzielle
+Erweiterungen aufzeigen werden.
