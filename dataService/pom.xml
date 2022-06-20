@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.fh.schwanzuslongus</groupId>
-	<artifactId>dataService</artifactId>
+	<artifactId>mimir</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
-	<name>dataService</name>
-	<description>dataService</description>
+	<packaging>jar</packaging>
+	<name>Mimir</name>
+	<description>Provides a REST Api to the Database</description>
 	<properties>
 		<java.version>18</java.version>
 	</properties>
@@ -64,6 +64,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>mimir</finalName>
 	</build>
 
 </project>

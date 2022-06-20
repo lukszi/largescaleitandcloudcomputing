@@ -1,4 +1,4 @@
-package de.fh.schwanzuslongus.dataservice;
+package de.fh.schwanzuslongus.mimir;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
