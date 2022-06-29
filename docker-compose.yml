@@ -1,5 +1,15 @@
 version: '3.8'
 services:
+  svc_auth:
+    image: 'authentication_service'
+    ports:
+      - "81:80"
+    environment:
+      - DATABASE_PASSWORD=${DB_PASSWORD}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_URL=db_user:5432/users
+    networks:
+      - userServices
   Mimir:
     image: 'mimir'
     ports:
