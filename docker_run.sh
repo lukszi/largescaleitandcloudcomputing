@@ -1,10 +1,13 @@
-cd database
-docker build -t db_chat ./chat
-docker build -t db_message ./message
-docker build -t db_user ./user
-docker build -t database .
-cd ../dataService
-mvn clean package -DskipTests
-docker build -t mimir .
-cd ..
+(
+cd database || exit 1
+./build_db_images.sh
+)
+(
+cd dataService || exit 2
+./build_docker_image.sh
+)
+(
+cd authenticationService || exit 3
+./build_docker_image.sh
+)
 docker-compose up -d
