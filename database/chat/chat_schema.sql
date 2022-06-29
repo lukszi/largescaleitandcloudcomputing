@@ -21,6 +21,6 @@ CREATE TABLE IF NOT EXISTS "chat"."chat_participant" (
     PRIMARY KEY ("participation_id"),
     CONSTRAINT "fk_chat"
     FOREIGN KEY ("chat_id")
-    REFERENCES "chat_service"."chat" ("id")
+    REFERENCES "chat"."chat" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
