@@ -14,6 +14,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(schema = "chat_service", name="user")
 public class User
 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
