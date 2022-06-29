@@ -10,6 +10,33 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/chat_service
       - SPRING_DATASOURCE_USERNAME=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+  db_user:
+    image: "db_user"
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+    networks:
+      - userServices
+  db_chat:
+    image: "db_chat"
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+    networks:
+      - chatServices
+  db_message:
+    image: "db_message"
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+    networks:
+      - messageServices
   PostgreSQL:
     image: "database"
     ports:
@@ -22,3 +49,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+networks:
+  userServices:
+  chatServices:
+  messageServices:

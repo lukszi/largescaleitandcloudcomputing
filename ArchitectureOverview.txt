@@ -52,7 +52,7 @@ Databases
 		- user table
 			- user_id: int
 			- name: varchar(45)
-			- password: binary(60)
+			- password: bytea
 		- Used by
 			- AuthenticationService
 			- UserService
@@ -72,7 +72,7 @@ Databases
 			- message_id: int
 			- chat_id: int
 			- author_id: int
-			- message: varchar(3000)
+			- message: text
 			- time: timestamp
 		- Used by
 			ChatService
