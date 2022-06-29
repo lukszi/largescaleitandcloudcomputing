@@ -1,0 +1,78 @@
+Services
+	AuthenticationService
+		- authenticate
+			- post
+				Creates JWT if login is correct
+			- get
+				Verifies JWT
+	AuthorizationService
+		- Chat
+			- get
+				Given a JWT, a ChatId and an operation, returns whether user is authorized.
+		- User
+			- get
+				Given a JWT, a UserId and an operation, returns whether user is authorized.
+
+	JWT required for every request
+	UserService
+		- user
+			- get
+				Fetches all details of a user
+			- post
+				Creates user
+				available without authtoken
+			- delete
+				Deletes user
+	ChatService
+		- chat
+			- get
+				Fetches all details belonging to a chat
+			- post
+				Creates new chat
+			- delete
+				Deletes old chat
+		- chatsByUserId
+			- get
+				Fetches all chats belonging to a user
+	MessageService
+		- message
+			- get
+				Fetches a single message by ID
+			- post
+				Posts a new message into a Chat
+			- delete
+				Deletes a message from a Chat
+		- messagesByChatId
+			- get
+				Fetches all messages send into a Chat
+
+
+Databases
+	UserDatabase
+		- user table
+			- user_id: int
+			- name: varchar(45)
+			- password: binary(60)
+		- Used by
+			- AuthenticationService
+			- UserService
+	ChatDatabase
+		- chat table
+			- chat_id: int
+			- chat_name: varchar(60)
+		- chat_participant table
+			- participation_id: int
+			- chat_id: int
+			- user_id: int
+		- Used by
+			- AuthorizationService
+			- ChatService
+	MessageDatabase
+		- chat_message table
+			- message_id: int
+			- chat_id: int
+			- author_id: int
+			- message: varchar(3000)
+			- time: timestamp
+		- Used by
+			ChatService
