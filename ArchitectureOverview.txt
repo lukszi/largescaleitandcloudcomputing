@@ -3,6 +3,10 @@ Services
 		- authenticate
 			- post
 				Creates JWT if login is correct
+			    Headers:
+			        Content-Type: "application/json"
+			    Body:
+                    yeet
 			- get
 				Verifies JWT
 	AuthorizationService

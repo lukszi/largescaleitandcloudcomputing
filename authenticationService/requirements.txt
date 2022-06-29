@@ -1,0 +1,5 @@
+flask~=2.1
+pyjwt[crypto]~=2.4
+cryptography>=37
+bcrypt~=3.2.2
+psycopg2-binary~=2.9.3
