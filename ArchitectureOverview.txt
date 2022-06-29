@@ -53,10 +53,10 @@ Services
 
 Databases
 	UserDatabase
-		- user table
+		- users table
 			- user_id: int
 			- name: varchar(45)
-			- password: bytea
+			- password: varchar(60)
 		- Used by
 			- AuthenticationService
 			- UserService
