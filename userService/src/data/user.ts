@@ -11,10 +11,6 @@ export class User {
         this.pwHash = hash
     }
 
-    private static isBCryptHash(str: string): boolean {
-        return str.length == 60 && str.startsWith("$2b$");
-    }
-
     public static async create(name: string, password: string): Promise<User> {
         const hash = await bcrypt.hash(password);
         return new User(name, 0, hash);
