@@ -1,4 +1,4 @@
-import * as bcrypt from "./deps.ts";
+import * as bcrypt from "../deps.ts";
 
 export class User {
     public readonly name: string;

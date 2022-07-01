@@ -1,6 +1,6 @@
 import {User} from "./user.ts";
-import {Pool, PoolClient, QueryClient, Transaction} from "./deps.ts";
-import {UserNotFoundException} from "./exceptions.ts";
+import {Pool, PoolClient, QueryClient, Transaction} from "../deps.ts";
+import {UserNotFoundException} from "../util/exceptions.ts";
 
 export class Database {
     private pool: Pool;
