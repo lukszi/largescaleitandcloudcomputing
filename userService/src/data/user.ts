@@ -27,4 +27,8 @@ export class User {
     public getId(): number {
         return this.id;
     }
+
+    toJson(): string {
+        return JSON.stringify({"userName": this.name, "userId": this.id});
+    }
 }

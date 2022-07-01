@@ -1,7 +1,7 @@
-import {serve} from "./deps.ts";
-import {HttpMethod, Operation, Optional, Route, WebToken} from "./util/types.ts";
-import {authenticationServer} from "./util/env.ts";
-import {UnauthorizedRequestException} from "./util/exceptions.ts";
+import {serve} from "../deps.ts";
+import {HttpMethod, Operation, Optional, Route, WebToken} from "../util/types.ts";
+import {authenticationServer} from "../util/env.ts";
+import {UnauthorizedRequestException} from "../util/exceptions.ts";
 
 export class Webserver{
     private readonly port: number;
