@@ -64,7 +64,14 @@ export class Webserver{
         }
 
         const req = new Request(authenticationServer, {method: "GET", headers: {Authorization: authorization}});
-        const resp = await fetch(req);
+
+        let resp: Response;
+        try{
+            resp = await fetch(req);
+        }
+        catch(_e){
+            throw new UnauthorizedRequestException("Authentication server not reachable");
+        }
         if(resp.status != 200){
             throw new UnauthorizedRequestException("Authentication server returned error");
         }
