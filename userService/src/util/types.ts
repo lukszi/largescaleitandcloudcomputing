@@ -9,7 +9,6 @@ export interface Route {
 export interface Operation {
     execute: Endpoint;
     authenticationRequired: boolean;
-    authorizationRequired: boolean;
     operationName: string
 }
 

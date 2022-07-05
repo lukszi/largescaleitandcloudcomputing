@@ -23,8 +23,7 @@ export class Webserver{
      * @param req request to be dispatched
      */
     private async requestHandler(req: Request): Promise<Response>{
-        const parsedUrl = urlParse(req.url);
-        const path = parsedUrl.pathname;
+        const path = urlParse(req.url).pathname;
         const method: HttpMethod = <HttpMethod>req.method;
 
         // Find route that matches request

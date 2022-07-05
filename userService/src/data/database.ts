@@ -1,6 +1,6 @@
 import {User} from "./user.ts";
 import {Pool, PoolClient, QueryClient, Transaction, TransactionError} from "../deps.ts";
-import {UserNotFoundException, UserAlreadyExistsException} from "../util/exceptions.ts";
+import {UserAlreadyExistsException, UserNotFoundException} from "../util/exceptions.ts";
 
 export class Database {
     private pool: Pool;
@@ -22,7 +22,7 @@ export class Database {
      * @param queryFunc function to wrap
      * @returns result of queryFunc
      */
-    private async wrapQuery(queryFunc: (client: QueryClient) => Promise<User>): Promise<User> {
+    private async wrapQuery<T>(queryFunc: (client: QueryClient) => Promise<T>): Promise<T> {
         const connection: PoolClient = await this.pool.connect();
         try {
             return await queryFunc(connection);
@@ -129,4 +129,24 @@ export class Database {
         }
         return result;
     }
+
+    public async deleteUser(id: number): Promise<User> {
+        return await this.wrapQuery(async (connection: QueryClient) => {
+            return await Database.wrapQueryTransactional(connection, async (transaction: Transaction) => {
+                const result = await transaction.queryObject<{ user_id: number, name: string, password: string }>
+                    `DELETE from users.users
+                     WHERE user_id = ${id}`;
+
+                // Check if results are empty
+                if (result.rows.length == 0) {
+                    throw new UserNotFoundException("User with id " + id + " not found");
+                }
+                const deletedDbUser = result.rows[0];
+                return User.createFromDB(deletedDbUser.name, deletedDbUser.user_id, deletedDbUser.password);
+            })
+        }
+        );
+    }
+
+
 }
