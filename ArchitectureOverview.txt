@@ -9,13 +9,6 @@ Services
                     yeet
 			- get
 				Verifies JWT
-	AuthorizationService
-		- Chat
-			- get
-				Given a JWT, a ChatId and an operation, returns whether user is authorized.
-		- User
-			- get
-				Given a JWT, a UserId and an operation, returns whether user is authorized.
 
 	JWT required for every request
 	UserService
