@@ -1,4 +1,4 @@
-import {serve} from "../deps.ts";
+import {serve, urlParse} from "../deps.ts";
 import {HttpMethod, Operation, Optional, Route, WebToken} from "../util/types.ts";
 import {authenticationServer} from "../util/env.ts";
 import {UnauthorizedRequestException} from "../util/exceptions.ts";
@@ -23,11 +23,12 @@ export class Webserver{
      * @param req request to be dispatched
      */
     private async requestHandler(req: Request): Promise<Response>{
-        const url = req.url;
+        const parsedUrl = urlParse(req.url);
+        const path = parsedUrl.pathname;
         const method: HttpMethod = <HttpMethod>req.method;
 
         // Find route that matches request
-        const matchingRoutes = this.handlerRegistry.filter(handler => handler.pathMatcher(url));
+        const matchingRoutes = this.handlerRegistry.filter(handler => handler.pathMatcher(path));
         if(matchingRoutes.length == 0){
             return new Response("Not found", {status: 404});
         }
