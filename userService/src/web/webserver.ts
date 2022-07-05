@@ -14,7 +14,7 @@ export class Webserver{
 
     async start(){
         console.log(`Webserver started on port ${this.port}`);
-        await serve(this.requestHandler, {port: this.port});
+        await serve((req)=>this.requestHandler(req), {port: this.port});
     }
 
     /**
