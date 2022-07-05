@@ -1,6 +1,6 @@
 import {User} from "./user.ts";
-import {Pool, PoolClient, QueryClient, Transaction} from "../deps.ts";
-import {UserNotFoundException} from "../util/exceptions.ts";
+import {Pool, PoolClient, QueryClient, Transaction, TransactionError} from "../deps.ts";
+import {UserNotFoundException, UserAlreadyExistsException} from "../util/exceptions.ts";
 
 export class Database {
     private pool: Pool;
@@ -83,13 +83,12 @@ export class Database {
      * @param user user to create in database
      * @returns user with id set
      */
-    public createUser(user: User): Promise<User> {
-        return this.wrapQuery(
-            async (connection: QueryClient) =>
-            {
+    public async createUser(user: User): Promise<User> {
+        let createdUser: User;
+        try {
+            createdUser = await this.wrapQuery(async (connection: QueryClient) => {
                 const results = await Database.wrapQueryTransactional(connection,
-                    async (transaction: Transaction) =>
-                    {
+                    async (transaction: Transaction) => {
                         return await transaction.queryObject<{ user_id: number, name: string, password: string }>
                             `INSERT into users.users (name, password)
                              values (${user.name}, ${user.pwHash})
@@ -98,18 +97,36 @@ export class Database {
                 const dbUser = results.rows[0];
                 return User.createFromDB(dbUser.name, dbUser.user_id, dbUser.password);
             });
+        } catch (e) {
+            if (e instanceof TransactionError) {
+                throw new UserAlreadyExistsException("User with name " + user.name + " already exists");
+            } else {
+                throw e;
+            }
+        }
+
+        return createdUser;
     }
 
     private static async wrapQueryTransactional<T>(connection: QueryClient, queryFunc: (transaction: Transaction) => Promise<T>): Promise<T> {
         const transaction = connection.createTransaction("insert_user");
+        let result: T;
         try {
             await transaction.begin();
-            const result: T = await queryFunc(transaction);
+            result = await queryFunc(transaction);
             await transaction.commit();
-            return result;
         } catch (e) {
-            await transaction.rollback();
-            throw e;
+            // Pass along transaction errors
+            if (e instanceof TransactionError) {
+                throw e;
+            }
+            // Rollback on any other error and output for debugging
+            else {
+                console.log(e)
+                await transaction.rollback();
+                throw e;
+            }
         }
+        return result;
     }
 }
