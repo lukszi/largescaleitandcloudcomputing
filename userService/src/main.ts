@@ -1,7 +1,7 @@
 import {Webserver} from "./web/webserver.ts";
 import {Database} from "./data/database.ts";
 import {dbConfig} from "./util/env.ts";
-import {buildCreateUserEndpoint, buildDeleteUserEndpoint} from "./web/endpoints.ts";
+import {buildCreateUserEndpoint, buildDeleteUserEndpoint, buildGetUserEndpoint} from "./web/endpoints.ts";
 import {HttpMethod, Operation, Route} from "./util/types.ts";
 
 //Get DB connection from environment variables
@@ -20,9 +20,18 @@ const deleteUserOperation: Operation = {
     operationName: "deleteUser"
 };
 
+const getUserOperation: Operation = {
+    execute: buildGetUserEndpoint(db),
+    authenticationRequired: true,
+    operationName: "getUser"
+}
+
 const userRoute: Route = {
     pathMatcher: (url: string) => url.startsWith("/users"),
-    operations: new Map<HttpMethod, Operation>([["POST", createUserOperation], ["DELETE", deleteUserOperation]])
+    operations: new Map<HttpMethod, Operation>([
+        ["POST", createUserOperation],
+        ["DELETE", deleteUserOperation],
+        ["GET", getUserOperation]])
 }
 
 

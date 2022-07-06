@@ -58,3 +58,32 @@ export function buildDeleteUserEndpoint(db: Database): (req: Request, tokenDetai
         }
     }
 }
+
+export function buildGetUserEndpoint(db: Database): (req: Request, tokenDetails?: WebToken) => Promise<Response>{
+    return async function getUser(req: Request, tokenDetails?: WebToken): Promise<Response> {
+        // check if req is null
+        if (req == null) {
+            throw new Response("Request is null", {status: 500});
+        }
+        const userId: number = parseInt(urlParse(req.url).pathname.split("/").reverse()[0]);
+
+        // Authorize request
+        if (tokenDetails == null) {
+            throw new Response("Authorization failed", {status: 500});
+        }
+
+        // Get user
+        try {
+            const dbUser = await db.getUserById(userId);
+            return new Response(dbUser.toJson(), {status: 200});
+        }
+        catch (e) {
+            if (e instanceof UserNotFoundException) {
+                return new Response("User not found", {status: 404});
+            }
+            else {
+                throw new Response("Failed to get user", {status: 500});
+            }
+        }
+    }
+}
