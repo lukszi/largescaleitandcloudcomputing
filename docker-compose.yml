@@ -3,17 +3,31 @@ services:
   svc_auth:
     image: 'authentication_service'
     ports:
-      - "81:80"
+      - "${SVC_AUTH_PORT}:80"
     environment:
       - DATABASE_PASSWORD=${DB_PASSWORD}
       - DATABASE_USER=${DB_USER}
       - DATABASE_URL=db_user:5432/users
     networks:
       - userServices
+      - authServices
+  svc_user:
+    image: 'user_service'
+    ports:
+      - "${SVC_USR_PORT}:80"
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USER=${DB_USER}
+      - DB_HOST=db_user
+      - DB_PORT=5432
+      - AUTHENTICATION_SERVER=http://auth_svc:${SVC_AUTH_PORT}/authenticate
+    networks:
+      - userServices
+      - authServices
   db_user:
     image: "db_user"
     ports:
-      - "5433:5432"
+      - "${DB_USR_PORT}:5432"
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}
@@ -42,3 +56,4 @@ networks:
   userServices:
   chatServices:
   messageServices:
+  authServices:

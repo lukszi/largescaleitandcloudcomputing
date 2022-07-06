@@ -13,7 +13,19 @@ export class Database {
             port: port,
             password: password,
         };
-        this.pool = new Pool(config, 3);
+        try{
+            this.pool = new Pool(config, 3);
+        }
+        catch(e){
+            console.log("Could not connect to database");
+            console.log("host: " + host);
+            console.log("port: " + port);
+            console.log("user: " + user);
+            console.log("password: " + password);
+            console.log("dbName: " + dbName);
+            console.log(e);
+            throw new Error(e);
+        }
     }
 
     /**

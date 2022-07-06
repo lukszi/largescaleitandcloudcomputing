@@ -1,4 +1,4 @@
-const authenticationServer = Deno.env.get("AUTHENTICATION_SERVER") || "http://auth:8080";
+const authenticationServer = Deno.env.get("AUTHENTICATION_SERVER") || "http://auth:8080/authenticate";
 const dbConfig = {
     dbHost: Deno.env.get("DB_HOST") || "localhost",
     dbPort: parseInt(Deno.env.get("DB_PORT") || "5432"),

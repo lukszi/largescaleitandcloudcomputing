@@ -5,8 +5,10 @@ import {buildCreateUserEndpoint, buildDeleteUserEndpoint, buildGetUserEndpoint} 
 import {HttpMethod, Operation, Route} from "./util/types.ts";
 
 //Get DB connection from environment variables
+console.log("Connecting to database...");
 const db = new Database(dbConfig.dbHost, dbConfig.dbPort, dbConfig.dbUser, dbConfig.dbPassword, dbConfig.dbName);
 
+console.log("Building Endpoints...");
 // Create Routes
 const createUserOperation: Operation = {
     execute: buildCreateUserEndpoint(db),
@@ -34,8 +36,8 @@ const userRoute: Route = {
         ["GET", getUserOperation]])
 }
 
-
+console.log("Starting webserver...");
 //Setup webserver
-const webServer = new Webserver(8080);
+const webServer = new Webserver(80);
 webServer.addRoute(userRoute)
 await webServer.start();
