@@ -35,7 +35,8 @@ public class ChatController
         int uid = getPrincipalId(principal);
         
         List<ChatParticipant> participations = chatParticipantRepo.findByUserId(uid);
-        List<Integer> chatIds = participations.stream().map(ChatParticipant::getChatId).toList();
+        List<Integer> chatIds = participations.stream().map(chatParticipant -> chatParticipant.getChat().getId())
+                .toList();
         
         return ResponseEntity.ok(chatIds);
     }
@@ -59,8 +60,9 @@ public class ChatController
         // Create chat participants
         for (Integer participant : participants) {
             ChatParticipant chatParticipant = new ChatParticipant();
-            chatParticipant.setChatId(chat.getId());
+            chatParticipant.setChat(chat);
             chatParticipant.setUserId(participant);
+            chatParticipantRepo.save(chatParticipant);
         }
         
         return ResponseEntity.ok(new CreateChatDTO(dto.chatName(),chat.getId(), participants));

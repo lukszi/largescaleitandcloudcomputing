@@ -26,9 +26,6 @@ public class ChatParticipant
     @Basic
     @Column(name = "user_id")
     private int userId;
-    @Basic
-    @Column(name = "chat_id", insertable = false, updatable = false)
-    private int chatId;
     @ManyToOne
     @JoinColumn(name = "chat_id", referencedColumnName = "id", nullable = false)
     private Chat chat;
@@ -39,12 +36,12 @@ public class ChatParticipant
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChatParticipant that = (ChatParticipant) o;
-        return participationId == that.participationId && userId == that.userId && chatId == that.chatId;
+        return participationId == that.participationId && userId == that.userId && chat.getId() == that.chat.getId();
     }
     
     @Override
     public int hashCode()
     {
-        return Objects.hash(participationId, userId, chatId);
+        return Objects.hash(participationId, userId, chat.getId());
     }
 }

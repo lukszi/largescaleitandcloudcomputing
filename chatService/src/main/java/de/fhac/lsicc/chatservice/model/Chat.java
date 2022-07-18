@@ -3,6 +3,7 @@ package de.fhac.lsicc.chatservice.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class Chat
     private String chatName;
     @OneToMany(mappedBy = "chat")
     @ToString.Exclude
-    private Collection<ChatParticipant> chatParticipants;
+    private Collection<ChatParticipant> chatParticipants = new ArrayList<>();
     
     @Override
     public boolean equals(Object o)
