@@ -34,7 +34,7 @@ services:
       - DATABASE_URL=db_chat:5432/chat
       - AUTHENTICATION_SERVER=http://auth_svc:${SVC_AUTH_PORT}/authenticate
     networks:
-      - userServices
+      - chatServices
       - authServices
   db_user:
     image: "db_user"
