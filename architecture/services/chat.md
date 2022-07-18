@@ -44,7 +44,7 @@ Creates a chat with a name and a given list of participants by their ids.
           {
             "chatId": 1,
             "chatName": "name",
-            "users": [1, 2, 3, 4]
+            "participants": [1, 2, 3, 4]
           }
         ```
     - credentials not accepted: 401
