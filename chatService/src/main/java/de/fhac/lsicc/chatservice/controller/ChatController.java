@@ -32,20 +32,18 @@ public class ChatController
     
     @GetMapping
     public ResponseEntity<List<Integer>> getAllUserChats(Principal principal){
-        JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
-                ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
-        int uid = underlyingPrincipal.uid();
+        int uid = getPrincipalId(principal);
+        
         List<ChatParticipant> participations = chatParticipantRepo.findByUserId(uid);
         List<Integer> chatIds = participations.stream().map(ChatParticipant::getChatId).toList();
+        
         return ResponseEntity.ok(chatIds);
     }
     
     @PostMapping
     public ResponseEntity<CreateChatDTO> createChat(@RequestBody CreateChatDTO dto, Principal principal){
-        JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
-                ((UsernamePasswordAuthenticationToken) principal).getPrincipal();
+        int uid = getPrincipalId(principal);
         // Make sure creator is in the list of participants
-        int uid = underlyingPrincipal.uid();
         if(!dto.participants().contains(uid)){
             dto.participants().add(uid);
         }
@@ -66,6 +64,13 @@ public class ChatController
         }
         
         return ResponseEntity.ok(new CreateChatDTO(dto.chatName(),chat.getId(), participants));
+    }
+    
+    private int getPrincipalId(Principal principal)
+    {
+        JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
+                ((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+        return underlyingPrincipal.uid();
     }
     
 }
