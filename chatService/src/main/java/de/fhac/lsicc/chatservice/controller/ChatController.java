@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class ChatController
                 .toList();
         
         if(!participants.contains(uid)){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         
         return ResponseEntity.ok(new ChatDTO(chat.getChatName(), chat.getId(), participants));
@@ -94,5 +95,28 @@ public class ChatController
         JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
                 ((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         return underlyingPrincipal.uid();
+    }
+    
+    @DeleteMapping("/{chatId}")
+    public ResponseEntity<ChatDTO> deleteChatById(@PathVariable int chatId, Principal principal){
+        int uid = getPrincipalId(principal);
+        
+        Chat chat = chatRepo.findById(chatId).orElse(null);
+        if(chat == null){
+            return ResponseEntity.notFound().build();
+        }
+    
+        Collection<ChatParticipant> participants = chat.getChatParticipants();
+        List<Integer> participant_ids = participants.stream()
+                .map(ChatParticipant::getUserId)
+                .toList();
+        
+        if(!participant_ids.contains(uid))
+        {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        chatParticipantRepo.deleteAll(participants);
+        chatRepo.delete(chat);
+        return ResponseEntity.ok(new ChatDTO(chat.getChatName(), chat.getId(), participant_ids));
     }
 }
