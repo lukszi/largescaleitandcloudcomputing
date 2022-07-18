@@ -1,11 +1,12 @@
 package de.fhac.lsicc.chatservice.controller;
 
 import de.fhac.lsicc.chatservice.config.JwtTokenService;
-import de.fhac.lsicc.chatservice.dto.CreateChatDTO;
+import de.fhac.lsicc.chatservice.dto.ChatDTO;
 import de.fhac.lsicc.chatservice.model.Chat;
 import de.fhac.lsicc.chatservice.model.ChatParticipant;
 import de.fhac.lsicc.chatservice.repsitories.ChatParticipantRepository;
 import de.fhac.lsicc.chatservice.repsitories.ChatRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class ChatController
     }
     
     @PostMapping
-    public ResponseEntity<CreateChatDTO> createChat(@RequestBody CreateChatDTO dto, Principal principal){
+    public ResponseEntity<ChatDTO> createChat(@RequestBody ChatDTO dto, Principal principal){
         int uid = getPrincipalId(principal);
         // Make sure creator is in the list of participants
         if(!dto.participants().contains(uid)){
@@ -65,7 +66,7 @@ public class ChatController
             chatParticipantRepo.save(chatParticipant);
         }
         
-        return ResponseEntity.ok(new CreateChatDTO(dto.chatName(),chat.getId(), participants));
+        return ResponseEntity.ok(new ChatDTO(dto.chatName(),chat.getId(), participants));
     }
     
     private int getPrincipalId(Principal principal)
@@ -74,5 +75,4 @@ public class ChatController
                 ((UsernamePasswordAuthenticationToken)principal).getPrincipal();
         return underlyingPrincipal.uid();
     }
-    
 }
