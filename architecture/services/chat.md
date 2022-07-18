@@ -21,7 +21,8 @@ Get all chats the current user is part of as a list of chat ids.
     - credentials not accepted: 401
 - example:
   ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"Username": "Lukas", "Password": "yeet"}' http://localhost/authenticate
+    curl --location --request GET 'http://localhost:8080/chat'\
+    --header 'Authorization: Bearer <token>'
   ```
 
 ## /chat
@@ -50,7 +51,13 @@ Creates a chat with a name and a given list of participants by their ids.
     - credentials not accepted: 401
 - example:
   ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"Username": "Lukas", "Password": "yeet"}' http://localhost/authenticate
+  curl --location --request POST 'http://localhost:8080/chat' \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data-raw '  {
+  "chatName": "chat",
+  "participants": [1, 2, 3, 4]
+  }'
   ```
 
 ## /chat/{id}
@@ -73,7 +80,8 @@ Returns a chat by its id and all users who are part of it.
     - chat not found: 404
 - example:
   ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"Username": "Lukas", "Password": "yeet"}' http://localhost/authenticate
+    curl --location --request GET 'http://localhost:8080/chat/4' \
+    --header 'Authorization: Bearer <token>'
   ```
 
 ## /chat/{id}
@@ -97,5 +105,6 @@ Deletes a chat from existence, messages will not be deleted.
     - unauthorized: 403
 - example:
   ```bash
-    curl -X POST -H "Content-Type: application/json" -d '{"Username": "Lukas", "Password": "yeet"}' http://localhost/authenticate
+    curl --location --request DELETE 'http://localhost:8080/chat/4' \
+    --header 'Authorization: Bearer <token>'
   ```
