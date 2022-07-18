@@ -67,6 +67,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>chatService</finalName>
     </build>
 
 </project>
