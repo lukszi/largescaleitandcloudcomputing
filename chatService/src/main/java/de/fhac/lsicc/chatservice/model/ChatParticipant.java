@@ -22,10 +22,10 @@ public class ChatParticipant
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "participation_id")
-    private int participationId;
+    private long participationId;
     @Basic
     @Column(name = "user_id")
-    private int userId;
+    private long userId;
     @ManyToOne
     @JoinColumn(name = "chat_id", referencedColumnName = "id", nullable = false)
     private Chat chat;

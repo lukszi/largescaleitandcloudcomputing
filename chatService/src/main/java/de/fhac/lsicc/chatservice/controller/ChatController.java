@@ -33,11 +33,11 @@ public class ChatController
     }
     
     @GetMapping
-    public ResponseEntity<List<Integer>> getAllUserChats(Principal principal){
-        int uid = getPrincipalId(principal);
+    public ResponseEntity<List<Long>> getAllUserChats(Principal principal){
+        long uid = getPrincipalId(principal);
         
         List<ChatParticipant> participations = chatParticipantRepo.findByUserId(uid);
-        List<Integer> chatIds = participations.stream().map(chatParticipant -> chatParticipant.getChat().getId())
+        List<Long> chatIds = participations.stream().map(chatParticipant -> chatParticipant.getChat().getId())
                 .toList();
         
         return ResponseEntity.ok(chatIds);
@@ -45,14 +45,14 @@ public class ChatController
     
     @PostMapping
     public ResponseEntity<ChatDTO> createChat(@RequestBody ChatDTO dto, Principal principal){
-        int uid = getPrincipalId(principal);
+        long uid = getPrincipalId(principal);
         // Make sure creator is in the list of participants
         if(!dto.participants().contains(uid)){
             dto.participants().add(uid);
         }
         
         // Remove duplicate participants
-        List<Integer> participants = new ArrayList<>(new HashSet<>(dto.participants()));
+        List<Long> participants = new ArrayList<>(new HashSet<>(dto.participants()));
         
         // Create chat
         Chat chat = new Chat();
@@ -60,10 +60,10 @@ public class ChatController
         chat = chatRepo.save(chat);
         
         // Create chat participants
-        for (Integer participant : participants) {
+        for (long participant_id : participants) {
             ChatParticipant chatParticipant = new ChatParticipant();
             chatParticipant.setChat(chat);
-            chatParticipant.setUserId(participant);
+            chatParticipant.setUserId(participant_id);
             chatParticipantRepo.save(chatParticipant);
         }
         
@@ -71,15 +71,15 @@ public class ChatController
     }
     
     @GetMapping("/{chatId}")
-    public ResponseEntity<ChatDTO> getChatById(@PathVariable int chatId, Principal principal){
-        int uid = getPrincipalId(principal);
+    public ResponseEntity<ChatDTO> getChatById(@PathVariable long chatId, Principal principal){
+        long uid = getPrincipalId(principal);
         
         Chat chat = chatRepo.findById(chatId).orElse(null);
         if(chat == null){
             return ResponseEntity.notFound().build();
         }
         
-        List<Integer> participants = chat.getChatParticipants().stream()
+        List<Long> participants = chat.getChatParticipants().stream()
                 .map(ChatParticipant::getUserId)
                 .toList();
         
@@ -90,7 +90,7 @@ public class ChatController
         return ResponseEntity.ok(new ChatDTO(chat.getChatName(), chat.getId(), participants));
     }
     
-    private int getPrincipalId(Principal principal)
+    private long getPrincipalId(Principal principal)
     {
         JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
                 ((UsernamePasswordAuthenticationToken)principal).getPrincipal();
@@ -98,8 +98,8 @@ public class ChatController
     }
     
     @DeleteMapping("/{chatId}")
-    public ResponseEntity<ChatDTO> deleteChatById(@PathVariable int chatId, Principal principal){
-        int uid = getPrincipalId(principal);
+    public ResponseEntity<ChatDTO> deleteChatById(@PathVariable long chatId, Principal principal){
+        long uid = getPrincipalId(principal);
         
         Chat chat = chatRepo.findById(chatId).orElse(null);
         if(chat == null){
@@ -107,7 +107,7 @@ public class ChatController
         }
     
         Collection<ChatParticipant> participants = chat.getChatParticipants();
-        List<Integer> participant_ids = participants.stream()
+        List<Long> participant_ids = participants.stream()
                 .map(ChatParticipant::getUserId)
                 .toList();
         

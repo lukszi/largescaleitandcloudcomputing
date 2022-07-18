@@ -75,7 +75,7 @@ public class JwtTokenService
         }
     }
     
-    public record TokenDetails(int uid, String iss, long iat, long exp) implements UserPrincipal
+    public record TokenDetails(long uid, String iss, long iat, long exp) implements UserPrincipal
         {
     
             @Override

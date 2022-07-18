@@ -20,7 +20,7 @@ public class Chat
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
     @Basic
     @Column(name = "chat_name")
     private String chatName;

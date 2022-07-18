@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Lukas Szimtenings on 7/18/2022.
  */
-public interface ChatParticipantRepository extends CrudRepository<ChatParticipant, Integer>
+public interface ChatParticipantRepository extends CrudRepository<ChatParticipant, Long>
 {
-    public List<ChatParticipant> findByUserId(int userId);
+    public List<ChatParticipant> findByUserId(long userId);
 }
