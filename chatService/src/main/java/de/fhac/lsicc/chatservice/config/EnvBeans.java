@@ -13,12 +13,9 @@ import java.net.URL;
 @Configuration
 public class EnvBeans
 {
-    @Value("${auth_server_url}")
+    @Value("${AUTHENTICATION_SERVER}")
     private String authServerUrlString;
-    public EnvBeans()
-    {
-    }
-    
+   
     @Bean
     public URL getAuthServerUrl() throws MalformedURLException
     {
