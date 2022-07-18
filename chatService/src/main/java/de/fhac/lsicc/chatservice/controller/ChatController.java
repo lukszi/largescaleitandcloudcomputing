@@ -69,6 +69,26 @@ public class ChatController
         return ResponseEntity.ok(new ChatDTO(dto.chatName(),chat.getId(), participants));
     }
     
+    @GetMapping("/{chatId}")
+    public ResponseEntity<ChatDTO> getChatById(@PathVariable int chatId, Principal principal){
+        int uid = getPrincipalId(principal);
+        
+        Chat chat = chatRepo.findById(chatId).orElse(null);
+        if(chat == null){
+            return ResponseEntity.notFound().build();
+        }
+        
+        List<Integer> participants = chat.getChatParticipants().stream()
+                .map(ChatParticipant::getUserId)
+                .toList();
+        
+        if(!participants.contains(uid)){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        
+        return ResponseEntity.ok(new ChatDTO(chat.getChatName(), chat.getId(), participants));
+    }
+    
     private int getPrincipalId(Principal principal)
     {
         JwtTokenService.TokenDetails underlyingPrincipal = (JwtTokenService.TokenDetails)
