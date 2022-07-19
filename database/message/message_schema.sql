@@ -10,6 +10,6 @@ CREATE TABLE IF NOT EXISTS "message"."chat_message" (
     "message_id" SERIAL NOT NULL,
     "message" TEXT NOT NULL,
     "chat_id" INT NOT NULL,
-    "time" TIMESTAMP NULL,
+    "time" TIMESTAMPTZ NULL,
     "author_id" INT NULL,
     PRIMARY KEY ("message_id"));
