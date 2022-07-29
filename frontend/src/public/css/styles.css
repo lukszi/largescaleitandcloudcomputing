@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,
+body {
+    background-image: url('https://getwallpapers.com/wallpaper/full/9/1/c/24138.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+}
+
+.container {
+    height: 100%;
+    align-content: center;
+}
+
+.card {
+    height: 310px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.card#__profile {
+    height: 200px;
+    margin-bottom: 10px
+}
+
+.card-header h1 {
+    text-align: center;
+    color: white;
+}
+
+.card-header h2 {
+    text-align: center;
+    color: white;
+}
+
+.card-header h3 {
+    text-align: center;
+    color: white;
+}
+
+.card-footer {
+    background: transparent;
+    border-top: transparent;
+    align-items: center;
+    padding: 20px 0;
+    color: white;
+}
+
+.card-footer p {
+    width: 400px;
+    padding: 0 20px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: hsl(5, 61%, 50%);
+
+    color: white;
+    border: 0 !important;
+}
+
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+input:hover {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.form-control {
+    padding: 10px;
+    border: 0 !important;
+    background-color: black;
+    color: white;
+    border-radius: 0;
+    align-items: center;
+}
+
+.form-control:focus {
+    background-color: black;
+    color: white;
+}
+
+.login_btn {
+    color: white;
+    background-color: hsl(325, 61%, 50%);
+    width: calc(50% - 3px);
+    margin: 30 0;
+    border-style: none;
+}
+
+.login_btn:hover {
+    color: black;
+    background-color: hsl(325, 61%, 50%);
+    border-style: none;
+}
+
+.login_btn:focus {
+    color: black;
+    background-color: hsl(325, 61%, 50%);
+    border-style: none;
+    border: none;
+}
+
+.login_btn:active {
+    color: black;
+    background-color: hsl(325, 61%, 50%);
+    border-style: none;
+    border: none;
+}
+
+/* .form-group login_btn {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+} */
+
+.card-body p {
+    text-align: center;
+    color: white;
+}
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
+
+.cookie-info {
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* quick link navigation */
+
+nav {
+    display: block;
+}
+
+.qln {
+    box-sizing: border-box;
+    /* height: 18%; */
+    /* overflow-x: hidden; */
+    text-size-adjust: 100%;
+    transition-property: none;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    display: block;
+}
+
+.btncmp-round-label {
+    overflow: visible;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    width: 3rem;
+}
+
+.qln__buttons {
+    padding-bottom: 30px;
+    padding-top: 30px;
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+    display: flex;
+    justify-content: center;
+}
+
+.btn-round {
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    height: 3rem;
+    width: 3rem;
+}
+
+.btncmp-round-label__label {
+    appearance: auto;
+    writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+    margin-top: 0.25rem;
+    margin: 0em;
+    overflow: hidden;
+    padding: 0 0.25rem;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.qln .btncmp-round-label {
+    margin: 0 3rem;
+}
+
+
+.qln__buttons .btn-round {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.qln__buttons .btncmp-round-label__label {
+    color: #ffffff
+}
+
+.qln .btncmp-round-label {
+    margin: 0 3rem;
+}
+
+.qln .btncmp-round-label__label {
+    max-width: 9rem;
+}
+
+button {
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    padding: 0;
+}
+
+
+.btncmp-round-label .btn-round {
+    transition: .25s ease;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: block;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.collapse-container__row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -1;
+    /* margin-right: -0.75rem;
+    margin-left: -0.75rem; */
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
+
+.collapse-container__col {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0%;
+    margin-top: 0;
+    /* padding-right: 0.75rem;
+    padding-left: 0.75rem; */
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    max-width: 100%;
+}
+
+.show >* {
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.collapsing >* {
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+/** CHATS **/
+.message-send__container {
+
+}
+
+.message-list__container {
+
+}
+
+.message {
+
+}
+
+.chat-create__container {
+    max-width: 100%;
+    width: 100%;
+    height: 15%;
+}
+
+.inputChatTitle {
+    height: 100%;
+    width: 50%;
+    background-color: transparent;
+}
