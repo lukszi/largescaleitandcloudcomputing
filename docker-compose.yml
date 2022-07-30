@@ -22,7 +22,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_HOST=db_user
       - DB_PORT=5432
-      - AUTHENTICATION_SERVER=http://auth_svc:${SVC_AUTH_PORT}/authenticate
+      - AUTHENTICATION_SERVER=http://svc_auth:${SVC_AUTH_PORT}/authenticate
     networks:
       - userServices
       - authServices
@@ -34,10 +34,22 @@ services:
       - DATABASE_PASSWORD=${DB_PASSWORD}
       - DATABASE_USER=${DB_USER}
       - DATABASE_URL=db_chat:5432/chat
-      - AUTHENTICATION_SERVER=http://auth_svc:${SVC_AUTH_PORT}/authenticate
+      - AUTHENTICATION_SERVER=http://svc_auth:${SVC_AUTH_PORT}/authenticate
     networks:
       - chatServices
       - authServices
+  webapp_frontend:
+    image: 'frontend_webapp'
+    ports:
+      - "${WEBAPP_FRONTEND_PORT}:80"
+    environment:
+      - AUTHENTICATION_SERVER=http://svc_auth:${SVC_AUTH_PORT}/authenticate
+    networks:
+      - userServices
+      - authServices
+      - frontendWebapp
+      - chatServices
+      - messageServices
   db_user:
     image: "db_user"
     ports:
@@ -47,14 +59,6 @@ services:
       - POSTGRES_USER=${DB_USER}
     networks:
       - userServices
-  webapp_frontend:
-    image: 'frontend_webapp'
-    ports:
-      - "${WEBAPP_FRONTEND_PORT}:80"
-    networks:
-      - userServices
-      - authServices
-      - frontendWebapp
   db_chat:
     image: "db_chat"
     ports:

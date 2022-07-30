@@ -6,6 +6,7 @@ import {urlParse} from "https://deno.land/x/url_parse@1.1.0/mod.ts";
 
 export function buildCreateUserEndpoint(db: Database): (req: Request, tokenDetails?: WebToken) => Promise<Response>{
     return async function createUser(req: Request): Promise<Response> {
+        // check if req is null
         if (req == null) {
             throw new Response("Request is null", {status: 500});
         }
@@ -34,6 +35,8 @@ export function buildDeleteUserEndpoint(db: Database): (req: Request, tokenDetai
             throw new Response("Request is null", {status: 500});
         }
         const userId: number = parseInt(urlParse(req.url).pathname.split("/").reverse()[0]);
+        const uid: number = parseInt(req.url.split('/').reverse()[0]);
+        throw new Response(`uid: ${uid} userId: ${userId}`, {status: 404});
 
         // Authorize request
         if (tokenDetails == null) {
@@ -66,6 +69,9 @@ export function buildGetUserEndpoint(db: Database): (req: Request, tokenDetails?
             throw new Response("Request is null", {status: 500});
         }
         const userId: number = parseInt(urlParse(req.url).pathname.split("/").reverse()[0]);
+        const uid: number = parseInt(req.url.split('/').reverse()[0]);
+        throw new Response(`uid: ${uid} userId: ${userId}`, {status: 404});
+
 
         // Authorize request
         if (tokenDetails == null) {

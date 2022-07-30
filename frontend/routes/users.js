@@ -36,7 +36,7 @@ router.post('/login', [check('user').escape()], async ( req, res ) => {
     });
 
     try {
-        const response = await fetch(`http://localhost:80/authenticate`, {
+        const response = await fetch(`http://localhost/authenticate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -94,10 +94,8 @@ router.post("/register", [check('user').escape()], async (req, res) => {
 
     const salting_rounds = 10
     const password = await bcrypt.hash(passwd, salting_rounds);
-    console.log(`Name: ${name}, Pw: ${password}`)
-
     try {
-        const response = await fetch("http://localhost:80/users", {
+        const response = await fetch("http://localhost/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -110,7 +108,6 @@ router.post("/register", [check('user').escape()], async (req, res) => {
             res.render('register_tpl', {error_msg: `User already exists`})
         else {
             const json = JSON.parse(data)
-            console.log(`json: ${json}`)
             if(!json.userName || !json.userId)
                 res.render('register_tpl', {error_msg: `An unknown error occurred`})
             else {
