@@ -28,7 +28,6 @@ export class Webserver{
 
         // Find route that matches request
         const matchingRoutes = this.handlerRegistry.filter(handler => handler.pathMatcher(path));
-        console.log(matchingRoutes)
         if(matchingRoutes.length == 0){
             return new Response("Not found", {status: 404});
         }
@@ -36,7 +35,6 @@ export class Webserver{
             return new Response("Multiple matching routes found", {status: 500});
         }
         const matchedRoute: Route = matchingRoutes[0];
-        console.log(matchedRoute)
 
         // Check if route supports method
         const endPoint: Optional<Operation> = matchedRoute.operations.get(method);

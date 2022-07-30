@@ -36,25 +36,33 @@ router.post('/login', [check('user').escape()], async ( req, res ) => {
     });
 
     try {
-        const response = await fetch(`http://localhost/authenticate`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({Username, Password})
+        const db = await Database.getInstance();
+        await db.validateUser(user, password);
+        req.session.user = Username;
+        req.session.save( (err) => {
+            if (err) console.log(err)
+            res.redirect('../chats')
         });
-        const data = await response.text();
-        if (data == "Credentials not accepted") {
-            res.render('login_tpl', {error_msg: "Username or password incorrect!"})
-        } else {
-            const token = data;
-            req.session.user = Username;
-            req.session.token = token;
-            req.session.save( (err) => {
-                if (err) console.log(err)
-                res.redirect('../chats')
-            });
-        }
+
+        // const response = await fetch(`http://localhost:80/authenticate`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({Username, Password})
+        // });
+        // const data = await response.text();
+        // if (data == "Credentials not accepted") {
+        //     res.render('login_tpl', {error_msg: "Username or password incorrect!"})
+        // } else {
+        //     const token = data;
+        //     req.session.user = Username;
+        //     req.session.token = token;
+        //     req.session.save( (err) => {
+        //         if (err) console.log(err)
+        //         res.redirect('../chats')
+        //     });
+        // }
     } catch (err) {
         console.error("Login failed:", err);
         res.render('login_tpl', {error_msg: `${err}`})
@@ -69,12 +77,6 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    // regenerate the session, which is good practice to help
-    // guard against forms of session fixation
-    req.session.regenerate( (err) => { 
-        if (err) console.log(err)
-    });
-
     res.render('register_tpl');
 });
 
@@ -95,25 +97,29 @@ router.post("/register", [check('user').escape()], async (req, res) => {
     const salting_rounds = 10
     const password = await bcrypt.hash(passwd, salting_rounds);
     try {
-        const response = await fetch("http://localhost/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({name, password})
-        })
-        const data = await response.text()
-        console.log(`data: ${data}`)
-        if(data == "User already exists")
-            res.render('register_tpl', {error_msg: `User already exists`})
-        else {
-            const json = JSON.parse(data)
-            if(!json.userName || !json.userId)
-                res.render('register_tpl', {error_msg: `An unknown error occurred`})
-            else {
-                res.render('register_tpl', {error_msg: `User '${name}' successfully registered! You may login now.`})
-            }
-        }
+        // backend wird ja nichts mehr....
+        const db = await Database.getInstance();
+        await db.registerUser(name, password)
+
+        // const response = await fetch("http://localhost:80/users", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({name, password})
+        // })
+        // const data = await response.text()
+        // console.log(`data: ${data}`)
+        // if(data == "User already exists")
+        //     res.render('register_tpl', {error_msg: `User already exists`})
+        // else {
+        //     const json = JSON.parse(data)
+        //     if(!json.userName || !json.userId)
+        //         res.render('register_tpl', {error_msg: `An unknown error occurred`})
+        //     else {
+        //         res.render('register_tpl', {error_msg: `User '${name}' successfully registered! You may login now.`})
+        //     }
+        // }
     } catch (err) {
         console.error(err)
         res.render('register_tpl', {error_msg: `${err}`})
