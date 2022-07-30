@@ -33,4 +33,10 @@ build/
 .vscode/
 
 ### AUTH Keys ###
-authenticationService/app/keys/
+authenticationService/app/keys
+
+### WebApp ###
+/frontend/node_modules/
+
+### Misc ###
+*.pdf

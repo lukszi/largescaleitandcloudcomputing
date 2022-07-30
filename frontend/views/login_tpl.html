@@ -1,0 +1,41 @@
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card login">
+                <div class="card-header">
+                    <h1>Login</h1>
+                </div>
+                <div class="card-footer">
+                    <form action="login" method="post">
+                        <div class="form-group">
+                            <label for="inputName">Username</label>
+                            <input type="text" class="form-control" id="inputName" name="user" required placeholder="Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPasswort">Password</label>
+                            <input type="password" class="form-control" id="inputPasswort" name="pw" required placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary login_btn">Login</button>
+                            <a class="btn btn-primary login_btn" href="register">Register</a>
+                        </div>
+                    </form>
+                    <div>
+                        <p>{{error_msg}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

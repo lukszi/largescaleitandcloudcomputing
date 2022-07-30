@@ -9,6 +9,8 @@ services:
       - DATABASE_USER=${DB_USER}
       - DATABASE_URL=db_user:5432/users
     networks:
+      - chatServices
+      - messageServices
       - userServices
       - authServices
   svc_user:
@@ -36,6 +38,18 @@ services:
     networks:
       - chatServices
       - authServices
+  webapp_frontend:
+    image: 'frontend_webapp'
+    ports:
+      - "${WEBAPP_FRONTEND_PORT}:80"
+    environment:
+      - AUTHENTICATION_SERVER=http://svc_auth:${SVC_AUTH_PORT}/authenticate
+    networks:
+      - userServices
+      - authServices
+      - frontendWebapp
+      - chatServices
+      - messageServices
   db_user:
     image: "db_user"
     ports:
@@ -69,3 +83,4 @@ networks:
   chatServices:
   messageServices:
   authServices:
+  frontendWebapp:
