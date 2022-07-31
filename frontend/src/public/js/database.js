@@ -1,4 +1,3 @@
-// USED IN PART 2
 const Sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 const path = require('path');
@@ -115,26 +114,6 @@ class Database {
         });
         return
     }
-
-    async getStudent(user) {
-        const db = this._database;
-        try {
-            const db_user = await db.query("SELECT grade FROM users WHERE username=:user", {
-                replacements: {
-                    user: user
-                },
-                type: Sequelize.QueryTypes.SELECT
-            });
-            if (db_user.length != 0)
-                return new student(user, db_user["0"].grade);
-        } catch (err) {
-            console.log(err)
-            return null;
-        }
-        return null;
-    }
-
-
 }
 
 module.exports = Database
