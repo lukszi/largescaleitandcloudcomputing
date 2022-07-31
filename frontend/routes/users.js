@@ -37,7 +37,7 @@ router.post('/login', [check('user').escape()], async ( req, res ) => {
 
     try {
         const db = await Database.getInstance();
-        await db.validateUser(user, password);
+        await db.validateUser(Username, Password);
         req.session.user = Username;
         req.session.save( (err) => {
             if (err) console.log(err)
